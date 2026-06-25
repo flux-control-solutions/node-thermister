@@ -9,7 +9,7 @@
     "src/**/*.ts"
   ],
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^26.0.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
