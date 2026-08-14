@@ -1,4 +1,4 @@
-export const conversionTable: {[resistance: number]: {f: number, c: number}} = {
+export const conversionTable: { [resistance: number]: { f: number; c: number } } = {
   323839: { f: -39, c: -39.44 },
   300974: { f: -37, c: -38.33 },
   279880: { f: -35, c: -37.22 },
@@ -115,4 +115,4 @@ export const conversionTable: {[resistance: number]: {f: number, c: number}} = {
   1034: { f: 187, c: 86.11 },
 };
 
-export const resistances: Array<number> = Object.keys(conversionTable) as unknown as Array<number>
+export const resistances: Array<number> = Object.keys(conversionTable) as unknown as Array<number>;
