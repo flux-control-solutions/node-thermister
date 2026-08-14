@@ -1,15 +1,23 @@
 {
   "name": "node-thermister",
-  "main": "index.ts",
-  "types": "index.ts",
-  "module": "index.ts",
-  "type": "module",
   "files": [
     "index.ts",
     "src/**/*.ts"
   ],
+  "type": "module",
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
+  },
   "devDependencies": {
-    "@types/node": "^26.0.1"
+    "@types/node": "^26.0.1",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
