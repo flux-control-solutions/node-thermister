@@ -9,11 +9,11 @@
  * @returns {number} The mapped value.
  */
 export function map(
-    x: number,
-    inMin: number,
-    inMax: number,
-    outMin: number,
-    outMax: number,
+  x: number,
+  inMin: number,
+  inMax: number,
+  outMin: number,
+  outMax: number,
 ): number {
-    return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+  return ((x - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 }
