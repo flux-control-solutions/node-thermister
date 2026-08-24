@@ -1,0 +1,1 @@
+bash tools/check-lockfile.sh && bun run format && bun run lint && bun run test

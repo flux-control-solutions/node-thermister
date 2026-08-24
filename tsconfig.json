@@ -3,17 +3,16 @@
     "lib": ["ESNext"],
     "module": "esnext",
     "target": "ES2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "moduleDetection": "force",
     "composite": true,
     "strict": true,
-    "downlevelIteration": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "types": ["node"],
+    "types": ["node", "bun"],
     "noEmit": true
   }
 }
