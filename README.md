@@ -1,4 +1,4 @@
-# node-thermister
+# @flux-control/node-thermister
 
 To install dependencies:
 

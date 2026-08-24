@@ -1,25 +1,48 @@
 {
-  "name": "node-thermister",
+  "name": "@flux-control/node-thermister",
+  "version": "0.1.0",
+  "description": "Convert Type 2 10K thermistor resistance readings to Celsius or Fahrenheit.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flux-control-solutions/node-thermister.git"
+  },
   "files": [
-    "index.ts",
-    "src/**/*.ts"
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "type": "module",
-  "main": "index.ts",
-  "module": "index.ts",
-  "types": "index.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
+    "build": "rm -rf ./dist && bun build ./index.ts --outdir ./dist --target node && tsc --noEmit false --emitDeclarationOnly --declaration --outDir ./dist --rootDir . --project tsconfig.build.json",
+    "changeset": "changeset",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix"
+    "lint:fix": "oxlint --fix",
+    "lock": "bash tools/refresh-lockfile.sh",
+    "prepare": "husky",
+    "release": "changeset publish",
+    "test": "bun test ./src/",
+    "typecheck": "tsc --noEmit",
+    "version": "changeset version"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.1",
+    "@types/bun": "latest",
     "@types/node": "^26.0.1",
+    "husky": "^9.1.7",
     "oxfmt": "^0.63.0",
-    "oxlint": "^1.78.0"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "oxlint": "^1.78.0",
+    "typescript": "^7.0.2"
   }
 }
