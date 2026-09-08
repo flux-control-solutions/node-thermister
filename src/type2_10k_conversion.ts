@@ -1,4 +1,10 @@
-export const conversionTable: { [resistance: number]: { f: number; c: number } } = {
+/** One row of the Type 2 10K table: the same temperature in both scales. */
+export interface ThermistorReading {
+  readonly f: number;
+  readonly c: number;
+}
+
+const conversionRows = {
   323839: { f: -39, c: -39.44 },
   300974: { f: -37, c: -38.33 },
   279880: { f: -35, c: -37.22 },
@@ -113,6 +119,21 @@ export const conversionTable: { [resistance: number]: { f: number; c: number } }
   1109: { f: 183, c: 83.89 },
   1070: { f: 185, c: 85.0 },
   1034: { f: 187, c: 86.11 },
-};
+} satisfies Record<number, ThermistorReading>;
 
-export const resistances: Array<number> = Object.keys(conversionTable) as unknown as Array<number>;
+/**
+ * Resistance in Ohms to the reading tabulated at exactly that resistance.
+ *
+ * A map rather than an indexed object, because resistance is a continuous
+ * measurement: most values a caller holds are not tabulated, and `get`
+ * reports that with `undefined` instead of asserting the key exists.
+ */
+export const conversionTable: ReadonlyMap<number, ThermistorReading> = new Map(
+  Object.entries(conversionRows).map(([resistance, reading]): [number, ThermistorReading] => [
+    Number(resistance),
+    reading,
+  ]),
+);
+
+/** Every tabulated resistance, ascending. The domain `bounds` searches. */
+export const resistances: number[] = [...conversionTable.keys()];

@@ -11,4 +11,9 @@ describe('@flux-control/node-thermister', () => {
     expect(resistanceToDegreesC(10_000)).toBeCloseTo(25, 1);
     expect(resistanceToDegreesF(10_000)).toBeCloseTo(77, 0);
   });
+
+  test('rejects a reading outside the tabulated range', () => {
+    expect(() => resistanceToDegreesC(500_000)).toThrow(RangeError);
+    expect(() => resistanceToDegreesF(500)).toThrow(RangeError);
+  });
 });

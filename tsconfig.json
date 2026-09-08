@@ -14,5 +14,6 @@
     "allowJs": true,
     "types": ["node", "bun"],
     "noEmit": true
-  }
+  },
+  "exclude": ["node_modules", "dist", "tools/oxlint/anti-slop"]
 }
