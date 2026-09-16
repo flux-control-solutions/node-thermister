@@ -1,6 +1,6 @@
 {
   "name": "@flux-control/node-thermister",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Convert Type 2 10K thermistor resistance readings to Celsius or Fahrenheit.",
   "license": "MIT",
   "repository": {
