@@ -1,12 +1,15 @@
+/** Maps numbers between ranges with linear interpolation or extrapolation. */
 /**
  * Maps a value from one range of numbers to another.
+ * Input and output endpoints can increase or decrease.
+ * Inputs are not validated. Equal input endpoints can produce `NaN` or infinity.
  *
- * @param {number} x - The value to map.
- * @param {number} inMin - The minimum value of the input range.
- * @param {number} inMax - The maximum value of the input range.
- * @param {number} outMin - The minimum value of the output range.
- * @param {number} outMax - The maximum value of the output range.
- * @returns {number} The mapped value.
+ * @param x - The value to map. Values outside the input range are extrapolated.
+ * @param inMin - First input endpoint.
+ * @param inMax - Second input endpoint. Use a value different from `inMin`.
+ * @param outMin - Output value corresponding to `inMin`.
+ * @param outMax - Output value corresponding to `inMax`.
+ * @returns The linearly mapped value. The result is not rounded or clamped.
  */
 export function map(
   x: number,

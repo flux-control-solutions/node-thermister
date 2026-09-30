@@ -1,6 +1,9 @@
-/** One row of the Type 2 10K table: the same temperature in both scales. */
+/** Type 2 10K resistance and temperature table used by the conversion functions. */
+/** One temperature row with integer Fahrenheit values and Celsius values rounded to two decimal places. */
 export interface ThermistorReading {
+  /** Tabulated temperature in degrees Fahrenheit. */
   readonly f: number;
+  /** Tabulated temperature in degrees Celsius. */
   readonly c: number;
 }
 
@@ -122,11 +125,10 @@ const conversionRows = {
 } satisfies Record<number, ThermistorReading>;
 
 /**
- * Resistance in Ohms to the reading tabulated at exactly that resistance.
+ * Maps each tabulated resistance in ohms to its temperature reading.
  *
- * A map rather than an indexed object, because resistance is a continuous
- * measurement: most values a caller holds are not tabulated, and `get`
- * reports that with `undefined` instead of asserting the key exists.
+ * `get` returns `undefined` for a resistance absent from the table.
+ * This table is internal and is not exported from the package root.
  */
 export const conversionTable: ReadonlyMap<number, ThermistorReading> = new Map(
   Object.entries(conversionRows).map(([resistance, reading]): [number, ThermistorReading] => [
@@ -135,5 +137,5 @@ export const conversionTable: ReadonlyMap<number, ThermistorReading> = new Map(
   ]),
 );
 
-/** Every tabulated resistance, ascending. The domain `bounds` searches. */
+/** Tabulated resistance values in ascending order, in ohms. */
 export const resistances: number[] = [...conversionTable.keys()];
