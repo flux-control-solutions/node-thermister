@@ -1,3 +1,4 @@
+/** Tests range mapping, Type 2 10K conversion, and out-of-range rejection. */
 import { describe, expect, test } from 'bun:test';
 
 import { map, resistanceToDegreesC, resistanceToDegreesF } from '../index';

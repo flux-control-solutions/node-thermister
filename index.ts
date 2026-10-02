@@ -1,3 +1,4 @@
+/** Converts Type 2 10K thermistor resistance readings to temperature. */
 import { bounds } from './src/bounds';
 import { map } from './src/map';
 import { conversionTable, resistances, type ThermistorReading } from './src/type2_10k_conversion';
@@ -11,13 +12,12 @@ interface Bracket {
 }
 
 /**
- * Finds the two tabulated resistances a reading falls between, along with
- * their temperatures, ready to interpolate across.
+ * Finds the nearest tabulated resistances strictly below and above a reading.
+ * An exact interior table match is excluded from this bracket.
  *
- * @param {number} resistance - The resistance reading from the thermister in Ohms.
- * @returns {Bracket} The bounding resistances and their tabulated readings.
- * @throws {RangeError} If the reading falls outside the tabulated range, where
- * there is nothing to interpolate between.
+ * @param resistance - Thermistor resistance in ohms.
+ * @returns The bounding resistances and their tabulated temperatures.
+ * @throws {RangeError} If either bound is absent, including for endpoint or non-finite inputs.
  */
 function bracket(resistance: number): Bracket {
   const [lower, upper] = bounds(resistance, resistances);
@@ -34,11 +34,13 @@ function bracket(resistance: number): Bracket {
 }
 
 /**
- * Given a resistance reading from a thermister, returns the corresponding
- * temperature in degrees Celsius.
+ * Converts a Type 2 10K resistance reading to degrees Celsius by linear interpolation.
+ * Uses the nearest table rows strictly below and above the input, even for an exact table match.
+ * The result is not rounded.
  *
- * @param {number} resistance - The resistance reading from the thermister in Ohms.
- * @returns {number} The corresponding temperature in degrees Celsius.
+ * @param resistance - Resistance in ohms. The value must be strictly inside the table range.
+ * @returns The interpolated temperature in degrees Celsius.
+ * @throws {RangeError} If the reading is at or outside the table endpoints, or is NaN.
  */
 export function resistanceToDegreesC(resistance: number): number {
   const { lower, upper, lowerReading, upperReading } = bracket(resistance);
@@ -46,11 +48,13 @@ export function resistanceToDegreesC(resistance: number): number {
 }
 
 /**
- * Given a resistance reading from a thermister, returns the corresponding
- * temperature in degrees Fahrenheit.
+ * Converts a Type 2 10K resistance reading to degrees Fahrenheit by linear interpolation.
+ * Uses the nearest table rows strictly below and above the input, even for an exact table match.
+ * The result is not rounded.
  *
- * @param {number} resistance - The resistance reading from the thermister in Ohms.
- * @returns {number} The corresponding temperature in degrees Fahrenheit.
+ * @param resistance - Resistance in ohms. The value must be strictly inside the table range.
+ * @returns The interpolated temperature in degrees Fahrenheit.
+ * @throws {RangeError} If the reading is at or outside the table endpoints, or is NaN.
  */
 export function resistanceToDegreesF(resistance: number): number {
   const { lower, upper, lowerReading, upperReading } = bracket(resistance);
