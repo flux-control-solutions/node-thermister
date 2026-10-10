@@ -29,6 +29,7 @@
     "format:fix": "oxfmt",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "lint:staged": "lint-staged --config package.json",
     "lock": "bash tools/refresh-lockfile.sh",
     "prepare": "husky",
     "release": "changeset publish",
@@ -42,8 +43,16 @@
     "@types/bun": "latest",
     "@types/node": "^26.0.1",
     "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "oxfmt": "^0.71.0",
     "oxlint": "1.78.0",
     "typescript": "^7.0.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}": [
+      "oxlint --fix",
+      "oxfmt"
+    ],
+    "*.{json,jsonc,md,mdx,css,scss,html,yaml,yml}": "oxfmt"
   }
 }

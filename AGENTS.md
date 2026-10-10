@@ -21,6 +21,33 @@ bun run build
 After dependency changes, run `bun run lock` to regenerate and validate the lockfile.
 Run checks relevant to the change. For documentation-only changes, check formatting, paths, commands, and technical accuracy.
 
+### Commit hook
+
+- `bun install` installs the Husky hook through `prepare`. Run `bun run prepare` to reinstall it.
+- The hook checks lockfile staging, fixes staged files with `lint-staged`, then runs package lint and tests.
+- Oxlint fixes run before oxfmt. Remaining lint errors or test failures block the commit.
+- Keep lint-staged's default backup and partial-staging protection enabled. Do not add a separate `git add` step.
+- Package lint and tests run against the working tree after staged fixes.
+- Run required type checks, builds, and Fallow audits separately before PR handoff.
+
+### Fallow audit
+
+- For code, dependency, or tooling configuration changes, run a Fallow audit alongside relevant type checks, lint, formatting, and tests.
+- Run the audit from this repository's root after the final edits, before committing or opening or updating a pull request.
+
+```bash
+bunx fallow audit --base <base-ref>
+```
+
+- Replace `<base-ref>` with the merge-base commit between `HEAD` and the intended PR target branch.
+- For uncommitted work only, use `HEAD`. Do not use `HEAD` to verify commits already included in a PR.
+- The Fallow MCP `audit` tool is equivalent. Set `root` to this repository and `base` to the same comparison ref.
+- Inspect the verdict and findings. Fix verified findings introduced by the change, then rerun the audit.
+- Verify usage before deleting reported code or dependencies. Public exports can have consumers outside this repository.
+- Explain remaining findings or false positives. Do not weaken rules or add baselines only to obtain a passing result.
+- If Fallow cannot run, report the blocker. Do not count a skipped audit as a pass.
+- Documentation-only changes do not require a Fallow audit.
+
 ## Conventions
 
 - Keep the conversion functions deterministic and free of side effects.
@@ -67,6 +94,7 @@ Treat this repository and its associated development records as public, regardle
 - Commit, push, or open pull requests only when requested.
 - Follow the repository's commit conventions. Use an imperative summary and explain important reasons in the body.
 - Describe the change, verification results, and remaining limitations in pull requests.
+- Include the Fallow audit scope, base ref, verdict, and unresolved findings with lint, formatting, type-check, and test results.
 - Report failed checks and checks that you could not run.
 - Do not rewrite published history unless explicitly requested.
 - Keep `CLAUDE.md` as an `@AGENTS.md` import. Keep these instructions complete for a standalone clone.
