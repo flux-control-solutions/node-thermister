@@ -38,14 +38,14 @@
     "version": "changeset version"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.1",
-    "@oxlint/plugins": "1.78.0",
+    "@changesets/cli": "^3.0.3",
+    "@oxlint/plugins": "1.87.0",
     "@types/bun": "latest",
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.6.5",
     "husky": "^9.1.7",
     "lint-staged": "^17.6.0",
-    "oxfmt": "^0.71.0",
-    "oxlint": "1.78.0",
+    "oxfmt": "^0.72.0",
+    "oxlint": "1.87.0",
     "typescript": "^7.0.2"
   },
   "lint-staged": {
